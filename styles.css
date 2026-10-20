@@ -1,0 +1,238 @@
+/* ==========================================================
+   STAGE 2: CSS STYLING - variables, typography, buttons
+   ========================================================== */
+:root {
+  --bg: #f7f8fc;
+  --bg-alt: #eceff8;
+  --surface: #ffffff;
+  --text: #121826;
+  --muted: #566078;
+  --border: #dde2f0;
+  --primary: #5b5bf0;
+  --primary-hover: #4545d6;
+  --accent: #14b8a6;
+  --shadow: 0 10px 30px rgba(30, 40, 90, 0.08);
+  --radius: 16px;
+  --header-h: 68px;
+}
+
+/* STAGE 3/9: dark theme = same variables, new values */
+:root[data-theme="dark"] {
+  --bg: #0b0f1a;
+  --bg-alt: #101626;
+  --surface: #151c2f;
+  --text: #eaeefb;
+  --muted: #9aa5c2;
+  --border: #243050;
+  --primary: #7c7cff;
+  --primary-hover: #9a9aff;
+  --accent: #2dd4bf;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+.container { width: min(1100px, 92%); margin-inline: auto; }
+
+h1, h2, h3 { line-height: 1.2; }
+h1 { font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1rem; }
+h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+/* STAGE 10: visible keyboard focus + skip link */
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.skip-link {
+  position: absolute; left: 1rem; top: -60px;
+  background: var(--primary); color: #fff; padding: 0.6rem 1rem; border-radius: 8px; z-index: 200;
+}
+.skip-link:focus { top: 1rem; }
+
+/* Buttons */
+.btn {
+  display: inline-block; padding: 0.85rem 1.6rem; border-radius: 999px;
+  font-weight: 600; font-size: 1rem; border: 2px solid transparent; cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 20px rgba(91, 91, 240, 0.35); }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-ghost { border-color: var(--border); color: var(--text); background: transparent; }
+.btn-ghost:hover { border-color: var(--primary); }
+
+/* ==========================================================
+   STAGE 4: NAVIGATION (desktop first, hamburger on mobile)
+   ========================================================== */
+.site-header {
+  position: sticky; top: 0; z-index: 100; height: var(--header-h);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.nav { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 800; font-size: 1.2rem; }
+.logo span { color: var(--primary); }
+
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { color: var(--muted); font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+.nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+.icon-btn {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  cursor: pointer; font-size: 1.1rem; color: var(--text);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.icon-btn:hover { transform: translateY(-2px); border-color: var(--primary); }
+
+.menu-btn { display: none; flex-direction: column; gap: 4px; }
+.bar { display: block; width: 18px; height: 2px; background: var(--text); transition: transform 0.3s, opacity 0.3s; }
+.menu-btn[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero {
+  padding: clamp(4rem, 12vw, 8rem) 0 4rem;
+  background:
+    radial-gradient(600px 300px at 80% 0%, color-mix(in srgb, var(--primary) 25%, transparent), transparent),
+    radial-gradient(500px 300px at 10% 20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent);
+}
+.hero-inner { text-align: center; max-width: 800px; }
+.eyebrow {
+  display: inline-block; padding: 0.35rem 1rem; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 1.2rem;
+}
+.gradient-text {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lead { color: var(--muted); font-size: 1.15rem; margin: 1.2rem auto 2rem; max-width: 600px; }
+.hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.stats { display: flex; justify-content: center; gap: clamp(1.5rem, 6vw, 4rem); margin-top: 3.5rem; flex-wrap: wrap; }
+.stats strong { display: block; font-size: 1.8rem; color: var(--primary); }
+.stats span { color: var(--muted); font-size: 0.9rem; }
+
+/* Sections */
+.section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+.section.alt { background: var(--bg-alt); }
+.section-head { text-align: center; max-width: 600px; margin: 0 auto 3rem; }
+.section-head p { color: var(--muted); }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: center; }
+.about-grid p { color: var(--muted); margin-bottom: 1rem; }
+.about-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow);
+}
+.checklist li { padding-left: 1.8rem; position: relative; margin-top: 0.8rem; color: var(--muted); }
+.checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* ==========================================================
+   STAGE 5 + 6: FEATURE CARDS with hover effect
+   ========================================================== */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover { transform: translateY(-8px); border-color: var(--primary); }
+.card p { color: var(--muted); }
+.card-icon {
+  width: 54px; height: 54px; display: grid; place-items: center; font-size: 1.6rem;
+  border-radius: 14px; margin-bottom: 1.2rem;
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+/* ==========================================================
+   STAGE 8: CONTACT FORM
+   ========================================================== */
+.contact-wrap { max-width: 640px; }
+.form {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow);
+}
+.field { margin-bottom: 1.2rem; }
+label { display: block; font-weight: 600; margin-bottom: 0.4rem; }
+input, textarea {
+  width: 100%; padding: 0.8rem 1rem; font: inherit; color: var(--text);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  transition: border-color 0.2s;
+}
+input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent); }
+.field.invalid input, .field.invalid textarea { border-color: #e5484d; }
+.error { display: block; color: #e5484d; min-height: 1.2em; margin-top: 0.3rem; font-size: 0.85rem; }
+.form-status { margin-top: 1rem; font-weight: 600; color: var(--accent); }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
+
+/* ==========================================================
+   STAGE 6: SCROLL REVEAL ANIMATION
+   ========================================================== */
+/* Content is visible by default. It is only hidden for the reveal effect when
+   JavaScript is running (the "js" class is added in index.html). */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.js .reveal.visible { opacity: 1; transform: none; }
+
+/* Skills tags (About) */
+.skills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+.skills li {
+  padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.9rem; font-weight: 600;
+  background: color-mix(in srgb, var(--primary) 14%, transparent); color: var(--primary);
+}
+
+/* Contact methods (email + WhatsApp) */
+.contact-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.contact-card {
+  display: flex; align-items: center; gap: 1rem; padding: 1.2rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow-wrap: anywhere;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.contact-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+.contact-card .card-icon { margin-bottom: 0; flex-shrink: 0; }
+.contact-card span:last-child { color: var(--muted); font-size: 0.95rem; }
+.contact-card strong { color: var(--text); }
+
+/* ==========================================================
+   STAGE 4 + 10: RESPONSIVE LAYOUT
+   ========================================================== */
+@media (max-width: 760px) {
+  .menu-btn { display: flex; }
+  .nav-links {
+    position: absolute; top: var(--header-h); left: 0; right: 0;
+    flex-direction: column; gap: 0; padding: 0.5rem 4%;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    max-height: 0; overflow: hidden; visibility: hidden;
+    transition: max-height 0.35s ease, visibility 0.35s;
+  }
+  .nav-links.open { max-height: 320px; visibility: visible; }
+  .nav-links a { display: block; padding: 0.9rem 0; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* STAGE 10: respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .js .reveal { opacity: 1; transform: none; }
+}
